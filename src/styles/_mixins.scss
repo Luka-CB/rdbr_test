@@ -1,0 +1,8 @@
+@mixin btn() {
+  background-color: transparent;
+  font-family: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}

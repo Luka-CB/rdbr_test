@@ -1,0 +1,112 @@
+.task {
+  border: 1px solid;
+  border-radius: 15px;
+  padding: 20px 0;
+  transition: outline 0.1s ease;
+  cursor: pointer;
+
+  &:not(:first-child) {
+    margin-top: 30px;
+  }
+
+  &:hover {
+    outline: 2px solid;
+    outline-offset: -1px;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+
+    .pills {
+      display: flex;
+      align-items: center;
+
+      .priority {
+        display: flex;
+        align-items: center;
+        padding: 4px 6px;
+        border: 1px solid var(--warning);
+        border-radius: 4px;
+        color: var(--warning);
+
+        .icon {
+          margin-right: 4px;
+        }
+
+        span {
+          font-size: 12px;
+        }
+      }
+
+      .department {
+        display: flex;
+        margin-left: 10px;
+        padding: 4px 18.5px;
+        border-radius: 4px;
+        background-color: #ff66a8;
+        color: var(--light);
+        border-radius: 15px;
+
+        .icon {
+          margin-right: 4px;
+        }
+
+        span {
+          font-size: 12px;
+        }
+      }
+    }
+
+    small {
+      font-size: 12px;
+    }
+  }
+
+  .body {
+    margin-top: 28px;
+    width: 100%;
+    padding: 0 30.5px;
+
+    h5 {
+      font-size: 15px;
+    }
+
+    p {
+      margin-top: 12px;
+      font-size: 12px;
+    }
+  }
+
+  .footer {
+    margin-top: 28px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .avatar {
+      width: 31px;
+      height: 31px;
+      border-radius: 50px;
+      background-color: #ff66a8;
+    }
+
+    .comments {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        font-size: 22px;
+        color: rgb(143, 143, 143);
+      }
+
+      span {
+        margin-left: 4px;
+        font-size: 14px;
+      }
+    }
+  }
+}

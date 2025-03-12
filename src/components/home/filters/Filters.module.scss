@@ -1,0 +1,27 @@
+.filters {
+  margin-top: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 688px;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+
+  .filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 199px;
+    padding: 12.5px 0;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    span {
+      margin-right: 8px;
+    }
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+}

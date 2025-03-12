@@ -1,0 +1,37 @@
+@use "../../../styles/mixins" as *;
+
+.header {
+  padding: 31px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .btns {
+    button {
+      @include btn();
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+
+    .create_colleague_btn {
+      border: 1px solid var(--accent);
+      color: var(--dark);
+      border-radius: 5px;
+
+      &:hover {
+        border-color: #b588f4;
+      }
+    }
+
+    .create_task_btn {
+      margin-left: 40px;
+      background-color: var(--accent);
+      color: var(--light);
+      border-radius: 5px;
+
+      &:hover {
+        background-color: #b588f4;
+      }
+    }
+  }
+}
