@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./Header.module.scss";
 
 const Header = () => {
@@ -11,7 +12,7 @@ const Header = () => {
           თანამშრომლის შექმნა
         </button>
         <button className={styles.create_task_btn}>
-          + შექმენი ახალი დავალება
+          <Link to="/create">+ შექმენი ახალი დავალება</Link>
         </button>
       </div>
     </header>

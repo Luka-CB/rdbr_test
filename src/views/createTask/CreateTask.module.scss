@@ -1,0 +1,86 @@
+@use "../../styles/mixins" as *;
+
+.container {
+  padding: 0 120px;
+  padding-bottom: 386px;
+
+  h1 {
+    margin-top: 40px;
+    font-size: 34px;
+    color: var(--dark);
+  }
+
+  form {
+    width: 100%;
+    padding: 65px 65px 219px 55px;
+    background-color: #fbf9ff;
+    min-height: 500px;
+    margin-top: 25px;
+    border: 0.3px solid #ddd2ff;
+    border-radius: 4px;
+    display: flex;
+
+    .col1 {
+      width: 550px;
+
+      .input_box {
+        display: flex;
+        flex-direction: column;
+
+        &:not(:first-child) {
+          margin-top: 55px;
+        }
+
+        label {
+          display: block;
+          color: #343a40;
+          font-size: 16px;
+          padding: 6px 6px 6px 0;
+        }
+
+        input {
+          @include input();
+        }
+
+        textarea {
+          @include input();
+          height: 133px;
+        }
+
+        small {
+          padding-top: 4px;
+          font-size: 10px;
+          color: #6c757d;
+        }
+      }
+
+      .select_inputs {
+        margin-top: 55px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    .col2 {
+      margin-left: 161px;
+      display: flex;
+      flex-direction: column;
+
+      button {
+        align-self: flex-end;
+        @include btn();
+        margin-top: 145px;
+        width: 208px;
+        height: 42px;
+        background-color: var(--accent);
+        border-radius: 5px;
+        font-size: 18px;
+        color: var(--light);
+
+        &:hover {
+          background-color: #b588f4;
+        }
+      }
+    }
+  }
+}

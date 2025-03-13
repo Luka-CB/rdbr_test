@@ -6,3 +6,13 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
+
+@mixin input() {
+  border: none;
+  outline: none;
+  background-color: var(--light);
+  border: 1px solid #dee2e6;
+  height: 45px;
+  border-radius: 5px;
+  padding: 10px;
+}

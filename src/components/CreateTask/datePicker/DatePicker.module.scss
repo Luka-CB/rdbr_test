@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 169px;
+
+  label {
+    display: block;
+    color: #343a40;
+    font-size: 16px;
+    padding: 6px 6px 6px 0;
+  }
+
+  .icon {
+    top: 5px;
+    position: relative;
+  }
+
+  .date_picker {
+    width: 318px;
+    border: none;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 12.5px 14px;
+    height: 45px;
+    padding-left: 30px;
+    outline: none;
+
+    &::placeholder {
+      color: #adb5bd;
+    }
+  }
+
+  .calendar {
+    width: 318px;
+    font-size: 16px;
+  }
+}
