@@ -33,7 +33,15 @@ const CreateTask = () => {
       <h1>შექმენი ახალი დავალება</h1>
       <form onSubmit={handleSubmit}>
         <div className={styles.col1}>
-          <div className={styles.input_box}>
+          <div
+            className={
+              errors.title && touched.title
+                ? styles.input_error
+                : values.title?.length >= 2 && values.title?.length <= 255
+                ? styles.input_success
+                : styles.input_box
+            }
+          >
             <label htmlFor="title">სათაური*</label>
             <input
               type="text"
@@ -42,34 +50,20 @@ const CreateTask = () => {
               value={values.title}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={
-                errors.title && touched.title ? styles.inputError : undefined
-              }
             />
-            <small
-              className={
-                errors.title && touched.title && values.title?.length < 2
-                  ? styles.msgError
-                  : values.title?.length >= 2
-                  ? styles.msgSuccess
-                  : undefined
-              }
-            >
-              მინიმუმ 2 სიმბოლო
-            </small>
-            <small
-              className={
-                errors.title && touched.title
-                  ? styles.msgError
-                  : values.title?.length <= 255 && values.title?.length >= 2
-                  ? styles.msgSuccess
-                  : undefined
-              }
-            >
-              მაქსიმუმ 255 სიმბოლო
-            </small>
+            <small>მინიმუმ 2 სიმბოლო</small>
+            <small>მაქსიმუმ 255 სიმბოლო</small>
           </div>
-          <div className={styles.input_box}>
+          <div
+            className={
+              errors.description && touched.description
+                ? styles.input_error
+                : values.description?.length >= 2 &&
+                  values.description?.length <= 255
+                ? styles.input_success
+                : styles.input_box
+            }
+          >
             <label htmlFor="description">აღწერა</label>
             <textarea
               name="description"
@@ -77,37 +71,9 @@ const CreateTask = () => {
               value={values.description}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={
-                errors.description && touched.description
-                  ? styles.inputError
-                  : undefined
-              }
             />
-            <small
-              className={
-                errors.description &&
-                touched.description &&
-                values.description?.length < 2
-                  ? styles.msgError
-                  : values.description?.length >= 2
-                  ? styles.msgSuccess
-                  : undefined
-              }
-            >
-              მინიმუმ 2 სიმბოლო
-            </small>
-            <small
-              className={
-                errors.description && touched.description
-                  ? styles.msgError
-                  : values.description?.length <= 255 &&
-                    values.description?.length >= 2
-                  ? styles.msgSuccess
-                  : undefined
-              }
-            >
-              მაქსიმუმ 255 სიმბოლო
-            </small>
+            <small>მინიმუმ 2 სიმბოლო</small>
+            <small>მაქსიმუმ 255 სიმბოლო</small>
           </div>
           <div className={styles.select_inputs}>
             <Priority />

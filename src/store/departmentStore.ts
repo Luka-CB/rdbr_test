@@ -9,26 +9,33 @@ export interface departmentIFace {
 interface DepartmentStore {
   departments: departmentIFace[];
   status: "idle" | "loading" | "success" | "failed";
+  departmentError: boolean;
+  setDepartmentError: (value: boolean) => void;
   toggleDepartmentOptions: boolean;
   setToggleDepartmentOptions: (value: boolean) => void;
   pickedDepartment: departmentIFace | null;
   pickedDepartmentModal: departmentIFace | null;
-  setPickedDepartment: (department: departmentIFace, isModal: boolean) => void;
+  setPickedDepartment: (
+    department: departmentIFace | null,
+    isModal: boolean
+  ) => void;
   getDepartments: () => Promise<void>;
 }
 
 const useDepartmentStore = create<DepartmentStore>((set) => ({
   departments: [],
   status: "idle",
+  departmentError: false,
+  setDepartmentError: (value) => set({ departmentError: value }),
   toggleDepartmentOptions: false,
   setToggleDepartmentOptions: (value: boolean) =>
     set({ toggleDepartmentOptions: value }),
   pickedDepartment: null,
   pickedDepartmentModal: null,
-  setPickedDepartment: (department: departmentIFace, isModal: boolean) =>
+  setPickedDepartment: (department: departmentIFace | null, isModal: boolean) =>
     isModal
-      ? set({ pickedDepartmentModal: department })
-      : set({ pickedDepartment: department }),
+      ? set({ pickedDepartmentModal: department, departmentError: false })
+      : set({ pickedDepartment: department, departmentError: false }),
   getDepartments: async () => {
     set({ status: "loading" });
     try {

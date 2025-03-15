@@ -52,7 +52,9 @@
           justify-content: space-between;
           margin-top: 45px;
 
-          .input_box {
+          .input_box,
+          .input_error,
+          .input_success {
             display: flex;
             flex-direction: column;
             width: 384px;
@@ -83,12 +85,48 @@
               }
             }
 
+            .only_letters {
+              font-size: 10px;
+              margin-top: 4px;
+              color: var(--danger);
+            }
+
             .min {
               margin-top: 8px;
             }
 
             .max {
               margin-top: 4px;
+            }
+          }
+
+          .input_error {
+            label {
+              color: var(--danger);
+            }
+
+            input {
+              border-color: var(--danger);
+            }
+
+            .msg {
+              .icon,
+              span {
+                color: var(--danger);
+              }
+            }
+          }
+
+          .input_success {
+            input {
+              border-color: var(--success);
+            }
+
+            .msg {
+              .icon,
+              span {
+                color: var(--success);
+              }
             }
           }
         }

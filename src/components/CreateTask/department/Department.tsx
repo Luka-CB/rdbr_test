@@ -19,6 +19,7 @@ const Department: React.FC<propsIFace> = ({ width = 550 }) => {
     pickedDepartment,
     pickedDepartmentModal,
     setPickedDepartment,
+    departmentError,
   } = useDepartmentStore();
 
   const handleToggleOptions = () => {
@@ -32,7 +33,10 @@ const Department: React.FC<propsIFace> = ({ width = 550 }) => {
   };
 
   return (
-    <div className={styles.container} style={{ width }}>
+    <div
+      className={departmentError ? styles.dep_error : styles.department}
+      style={{ width }}
+    >
       <label>დეპარტამენტი*</label>
       <div
         className={

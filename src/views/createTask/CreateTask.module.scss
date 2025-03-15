@@ -23,7 +23,9 @@
     .col1 {
       width: 550px;
 
-      .input_box {
+      .input_box,
+      .input_error,
+      .input_success {
         display: flex;
         flex-direction: column;
 
@@ -47,21 +49,32 @@
           height: 133px;
         }
 
-        .inputError {
-          border-color: var(--danger);
-        }
-
         small {
           padding-top: 4px;
           font-size: 10px;
           color: #6c757d;
         }
+      }
 
-        .msgError {
+      .input_error {
+        label,
+        small {
           color: var(--danger);
         }
 
-        .msgSuccess {
+        input,
+        textarea {
+          border-color: var(--danger);
+        }
+      }
+
+      .input_success {
+        input,
+        textarea {
+          border-color: var(--success);
+        }
+
+        small {
           color: var(--success);
         }
       }
