@@ -1,16 +1,23 @@
 import useColleagueStore from "../../../store/colleagueStore";
 import useDepartmentStore from "../../../store/departmentStore";
+import useModalStore from "../../../store/modalStore";
 import styles from "./Colleague.module.scss";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { IoAddCircleOutline } from "react-icons/io5";
 
 const Colleague = () => {
+  const { setToggleModal } = useModalStore();
   const { pickedDepartment } = useDepartmentStore();
   const { toggleColleagueOptions, setToggleColleagueOptions } =
     useColleagueStore();
 
   const handleToggleOptions = () => {
     setToggleColleagueOptions(!toggleColleagueOptions);
+  };
+
+  const handleToggleModal = () => {
+    setToggleModal(true);
+    setToggleColleagueOptions(false);
   };
 
   return (
@@ -37,7 +44,7 @@ const Colleague = () => {
       </div>
       {toggleColleagueOptions ? (
         <div className={styles.options} onClick={(e) => e.stopPropagation()}>
-          <div className={styles.add_colleague}>
+          <div className={styles.add_colleague} onClick={handleToggleModal}>
             <IoAddCircleOutline className={styles.icon} />
             <span>დაამატე თანამშრომელი</span>
           </div>

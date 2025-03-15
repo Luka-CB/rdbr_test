@@ -12,7 +12,8 @@ interface DepartmentStore {
   toggleDepartmentOptions: boolean;
   setToggleDepartmentOptions: (value: boolean) => void;
   pickedDepartment: departmentIFace | null;
-  setPickedDepartment: (department: departmentIFace) => void;
+  pickedDepartmentModal: departmentIFace | null;
+  setPickedDepartment: (department: departmentIFace, isModal: boolean) => void;
   getDepartments: () => Promise<void>;
 }
 
@@ -23,8 +24,11 @@ const useDepartmentStore = create<DepartmentStore>((set) => ({
   setToggleDepartmentOptions: (value: boolean) =>
     set({ toggleDepartmentOptions: value }),
   pickedDepartment: null,
-  setPickedDepartment: (department: departmentIFace) =>
-    set({ pickedDepartment: department }),
+  pickedDepartmentModal: null,
+  setPickedDepartment: (department: departmentIFace, isModal: boolean) =>
+    isModal
+      ? set({ pickedDepartmentModal: department })
+      : set({ pickedDepartment: department }),
   getDepartments: async () => {
     set({ status: "loading" });
     try {

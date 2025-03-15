@@ -1,16 +1,23 @@
 import useDepartmentStore, {
   departmentIFace,
 } from "../../../store/departmentStore";
+import useModalStore from "../../../store/modalStore";
 import styles from "./Department.module.scss";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 
-const Department = () => {
+interface propsIFace {
+  width?: number;
+}
+
+const Department: React.FC<propsIFace> = ({ width = 550 }) => {
+  const { toggleModal } = useModalStore();
   const {
     departments,
     getDepartments,
     toggleDepartmentOptions,
     setToggleDepartmentOptions,
     pickedDepartment,
+    pickedDepartmentModal,
     setPickedDepartment,
   } = useDepartmentStore();
 
@@ -19,13 +26,13 @@ const Department = () => {
     if (!departments.length) getDepartments();
   };
 
-  const handlePickDepartment = (value: departmentIFace) => {
-    setPickedDepartment(value);
+  const handlePickDepartment = (value: departmentIFace, isModal: boolean) => {
+    setPickedDepartment(value, isModal);
     setToggleDepartmentOptions(false);
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{ width }}>
       <label>დეპარტამენტი*</label>
       <div
         className={
@@ -35,9 +42,17 @@ const Department = () => {
         }
         onClick={handleToggleOptions}
       >
-        <span>
-          {pickedDepartment ? pickedDepartment?.name : "აირჩიე დეპარტამენტი"}
-        </span>
+        {toggleModal ? (
+          <span>
+            {pickedDepartmentModal
+              ? pickedDepartmentModal?.name
+              : "აირჩიე დეპარტამენტი"}
+          </span>
+        ) : (
+          <span>
+            {pickedDepartment ? pickedDepartment?.name : "აირჩიე დეპარტამენტი"}
+          </span>
+        )}
         {toggleDepartmentOptions ? (
           <FaChevronUp className={styles.icon} />
         ) : (
@@ -50,7 +65,9 @@ const Department = () => {
             <div
               className={styles.option}
               key={department.id}
-              onClick={() => handlePickDepartment(department)}
+              onClick={() =>
+                handlePickDepartment(department, toggleModal ? true : false)
+              }
             >
               <span>{department?.name}</span>
             </div>

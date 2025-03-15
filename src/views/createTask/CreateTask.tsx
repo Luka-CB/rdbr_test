@@ -6,8 +6,11 @@ import Department from "../../components/CreateTask/department/Department";
 import Priority from "../../components/CreateTask/priority/Priority";
 import Status from "../../components/CreateTask/status/Status";
 import styles from "./CreateTask.module.scss";
+import useModalStore from "../../store/modalStore";
 
 const CreateTask = () => {
+  const { toggleModal } = useModalStore();
+
   const validationSchema = yup.object().shape({
     title: yup.string().required().min(2).max(255),
     description: yup.string().required().min(2).max(255),
@@ -112,7 +115,7 @@ const CreateTask = () => {
           </div>
         </div>
         <div className={styles.col2}>
-          <Department />
+          {!toggleModal ? <Department /> : null}
           <Colleague />
           <DatePicker />
           <button type="submit" className={styles.submit_btn}>

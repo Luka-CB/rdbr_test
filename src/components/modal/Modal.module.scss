@@ -1,3 +1,5 @@
+@use "../../styles/mixins" as *;
+
 .modal_bg {
   position: fixed;
   top: 0;
@@ -7,4 +9,128 @@
   background-color: #0d0f103d;
   backdrop-filter: blur(5px);
   z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  .modal {
+    width: 913px;
+    background-color: var(--light);
+    padding: 40px 50px 60px 50px;
+    border-radius: 10px;
+    margin-top: 118px;
+    display: flex;
+    flex-direction: column;
+
+    .icon {
+      align-self: flex-end;
+      font-size: 40px;
+      color: #dee2e6;
+      cursor: pointer;
+
+      &:hover {
+        color: #d4d7da;
+      }
+    }
+
+    form {
+      margin-top: 37px;
+      width: 100%;
+
+      h1 {
+        font-size: 32px;
+        color: var(--dark);
+        text-align: center;
+      }
+
+      .form_content {
+        padding-bottom: 40px;
+
+        .inputs {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin-top: 45px;
+
+          .input_box {
+            display: flex;
+            flex-direction: column;
+            width: 384px;
+
+            label {
+              font-size: 14px;
+              color: #343a40;
+              padding-bottom: 3px;
+            }
+
+            input {
+              @include input();
+            }
+
+            .msg {
+              display: flex;
+              align-items: center;
+
+              .icon {
+                color: #6c757d;
+                font-size: 12px;
+              }
+
+              span {
+                font-size: 10px;
+                color: #6c757d;
+                margin-left: 2px;
+              }
+            }
+
+            .min {
+              margin-top: 8px;
+            }
+
+            .max {
+              margin-top: 4px;
+            }
+          }
+        }
+
+        .department {
+          margin-top: 45px;
+        }
+      }
+
+      .btns {
+        margin-top: 25px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+          @include btn();
+          border-radius: 5px;
+          font-size: 16px;
+          height: 42px;
+          padding: 0 16px;
+        }
+
+        .cancel_btn {
+          border: 1px solid var(--accent);
+          color: #343a40;
+          margin-right: 22px;
+
+          &:hover {
+            border-color: var(--accent-hover);
+          }
+        }
+
+        .submit_btn {
+          background-color: var(--accent);
+          color: var(--light);
+
+          &:hover {
+            background-color: var(--accent-hover);
+          }
+        }
+      }
+    }
+  }
 }

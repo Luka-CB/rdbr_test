@@ -6,8 +6,12 @@ import useStatusStore from "../../store/statusStore";
 import useDepartmentStore from "../../store/departmentStore";
 import useColleagueStore from "../../store/colleagueStore";
 import Modal from "../../components/modal/Modal";
+import useModalStore from "../../store/modalStore";
+import { useEffect } from "react";
 
 const Layout = () => {
+  const { toggleModal } = useModalStore();
+
   const { togglePriorityOptions, setTogglePriorityOptions } =
     usePriorityStore();
   const { toggleStatusOptions, setToggleStatusOptions } = useStatusStore();
@@ -23,10 +27,18 @@ const Layout = () => {
     if (toggleColleagueOptions) setToggleColleagueOptions(false);
   };
 
+  useEffect(() => {
+    if (toggleModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [toggleModal]);
+
   return (
     <main className={styles.container} onClick={handleClosePopups}>
       <Header />
-      <Modal />
+      {toggleModal ? <Modal /> : null}
       <Outlet />
     </main>
   );
