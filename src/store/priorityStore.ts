@@ -17,21 +17,26 @@ interface PriorityStore {
   getPriorities: () => Promise<void>;
 }
 
-const usePriorityStore = create<PriorityStore>((set) => ({
+const usePriorityStore = create<PriorityStore>((set, get) => ({
   priorities: [],
   status: "idle",
   togglePriorityOptions: false,
   setTogglePriorityOptions: (value: boolean) =>
     set({ togglePriorityOptions: value }),
   pickedPriority: null,
-  setPickedPriority: (colleague: priorityIFace) =>
-    set({ pickedPriority: colleague }),
+  setPickedPriority: (priority: priorityIFace) => {
+    set({ pickedPriority: priority });
+    localStorage.setItem("priority", JSON.stringify(priority));
+  },
   getPriorities: async () => {
     set({ status: "loading" });
     try {
       const { data } = await api.get("/priorities");
       if (data) {
-        set({ status: "success", priorities: data, pickedPriority: data[1] });
+        set({ status: "success", priorities: data });
+        if (!get().pickedPriority) {
+          set({ pickedPriority: data[1] });
+        }
       }
     } catch (error) {
       console.error(error);
@@ -39,5 +44,10 @@ const usePriorityStore = create<PriorityStore>((set) => ({
     }
   },
 }));
+
+const storedPriority = localStorage.getItem("priority") || "";
+usePriorityStore.setState({
+  pickedPriority: storedPriority ? JSON.parse(storedPriority) : null,
+});
 
 export default usePriorityStore;

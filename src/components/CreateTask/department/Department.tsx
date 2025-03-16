@@ -1,6 +1,7 @@
 import useDepartmentStore, {
   departmentIFace,
 } from "../../../store/departmentStore";
+import useEmployeeStore from "../../../store/employeeStore";
 import useModalStore from "../../../store/modalStore";
 import styles from "./Department.module.scss";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
@@ -11,6 +12,7 @@ interface propsIFace {
 
 const Department: React.FC<propsIFace> = ({ width = 550 }) => {
   const { toggleModal } = useModalStore();
+  const { setPickedEmployee } = useEmployeeStore();
   const {
     departments,
     getDepartments,
@@ -29,6 +31,7 @@ const Department: React.FC<propsIFace> = ({ width = 550 }) => {
 
   const handlePickDepartment = (value: departmentIFace, isModal: boolean) => {
     setPickedDepartment(value, isModal);
+    setPickedEmployee(null);
     setToggleDepartmentOptions(false);
   };
 

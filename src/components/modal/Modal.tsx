@@ -11,7 +11,7 @@ import useDepartmentStore from "../../store/departmentStore";
 import { useFormik } from "formik";
 import useAvatarStore from "../../store/avatarStore";
 import { getAvatarArrayBuffer } from "../../utils/buffer";
-import useColleagueStore from "../../store/colleagueStore";
+import useColleagueStore from "../../store/employeeStore";
 
 const Modal = () => {
   const { setToggleModal } = useModalStore();

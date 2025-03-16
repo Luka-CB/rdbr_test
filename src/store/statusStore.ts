@@ -12,24 +12,30 @@ interface StatusStore {
   toggleStatusOptions: boolean;
   setToggleStatusOptions: (value: boolean) => void;
   pickedStatus: statusIFace | null;
-  setPickedStatus: (priority: statusIFace) => void;
+  setPickedStatus: (status: statusIFace) => void;
   getStatuses: () => Promise<void>;
 }
 
-const useStatusStore = create<StatusStore>((set) => ({
+const useStatusStore = create<StatusStore>((set, get) => ({
   statuses: [],
   status: "idle",
   toggleStatusOptions: false,
   setToggleStatusOptions: (value: boolean) =>
     set({ toggleStatusOptions: value }),
   pickedStatus: null,
-  setPickedStatus: (colleague: statusIFace) => set({ pickedStatus: colleague }),
+  setPickedStatus: (status: statusIFace) => {
+    set({ pickedStatus: status });
+    localStorage.setItem("status", JSON.stringify(status));
+  },
   getStatuses: async () => {
     set({ status: "loading" });
     try {
       const { data } = await api.get("/statuses");
       if (data) {
-        set({ status: "success", statuses: data, pickedStatus: data[0] });
+        set({ status: "success", statuses: data });
+        if (!get().pickedStatus) {
+          set({ pickedStatus: data[0] });
+        }
       }
     } catch (error) {
       console.error(error);
@@ -37,5 +43,10 @@ const useStatusStore = create<StatusStore>((set) => ({
     }
   },
 }));
+
+const storedStatus = localStorage.getItem("status") || "";
+useStatusStore.setState({
+  pickedStatus: storedStatus ? JSON.parse(storedStatus) : null,
+});
 
 export default useStatusStore;

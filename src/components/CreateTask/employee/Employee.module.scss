@@ -1,4 +1,5 @@
-.container {
+.employee,
+.emp_error {
   width: 550px;
   margin-top: 93px;
   position: relative;
@@ -27,7 +28,25 @@
     border-radius: 5px;
     cursor: pointer;
 
-    span {
+    .picked_employee {
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .name {
+        margin-left: 10px;
+        font-size: 14px;
+        font-weight: 200;
+      }
+    }
+
+    .placeholder {
       font-size: 14px;
       font-weight: 200;
     }
@@ -112,6 +131,21 @@
           margin-left: 6px;
         }
       }
+    }
+  }
+}
+
+.emp_error {
+  label {
+    color: var(--danger);
+  }
+
+  .select_input {
+    border-color: var(--danger);
+
+    span,
+    .icon {
+      color: var(--danger);
     }
   }
 }

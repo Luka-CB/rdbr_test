@@ -4,7 +4,7 @@ import Header from "../../components/header/Header";
 import usePriorityStore from "../../store/priorityStore";
 import useStatusStore from "../../store/statusStore";
 import useDepartmentStore from "../../store/departmentStore";
-import useColleagueStore from "../../store/colleagueStore";
+import useColleagueStore from "../../store/employeeStore";
 import Modal from "../../components/modal/Modal";
 import useModalStore from "../../store/modalStore";
 import { useEffect } from "react";

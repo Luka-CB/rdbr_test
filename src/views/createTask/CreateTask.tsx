@@ -1,32 +1,74 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Colleague from "../../components/CreateTask/colleague/Colleague";
+import Employee from "../../components/CreateTask/employee/Employee";
 import DatePicker from "../../components/CreateTask/datePicker/DatePicker";
 import Department from "../../components/CreateTask/department/Department";
 import Priority from "../../components/CreateTask/priority/Priority";
 import Status from "../../components/CreateTask/status/Status";
 import styles from "./CreateTask.module.scss";
 import useModalStore from "../../store/modalStore";
+import useDepartmentStore from "../../store/departmentStore";
+import useEmployeeStore from "../../store/employeeStore";
+import useDeadlineStore from "../../store/deadlineStore";
+import { useEffect } from "react";
+import usePriorityStore from "../../store/priorityStore";
+import useStatusStore from "../../store/statusStore";
 
 const CreateTask = () => {
   const { toggleModal } = useModalStore();
+  const { pickedPriority } = usePriorityStore();
+  const { pickedStatus } = useStatusStore();
+  const { pickedDepartment, setDepartmentError } = useDepartmentStore();
+  const { setEmployeeError, pickedEmployee } = useEmployeeStore();
+  const { date, setDateError } = useDeadlineStore();
 
   const validationSchema = yup.object().shape({
     title: yup.string().required().min(2).max(255),
     description: yup.string().required().min(2).max(255),
   });
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    if (!pickedDepartment) {
+      return setDepartmentError(true);
+    }
+
+    if (!pickedEmployee) {
+      return setEmployeeError(true);
+    }
+
+    if (!date) {
+      return setDateError(true);
+    }
+
+    console.log({
+      name: values.title,
+      description: values.description,
+      due_date: date,
+      status_id: pickedStatus?.id,
+      employee_id: pickedEmployee?.id,
+      priority_id: pickedPriority?.id,
+    });
+  };
 
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues: {
-        title: "",
-        description: "",
+        title: localStorage.getItem("inputData")
+          ? JSON.parse(localStorage.getItem("inputData") || "").title
+          : "",
+        description: localStorage.getItem("inputData")
+          ? JSON.parse(localStorage.getItem("inputData") || "").description
+          : "",
       },
       validationSchema,
       onSubmit,
     });
+
+  useEffect(() => {
+    if (values) {
+      localStorage.setItem("inputData", JSON.stringify(values));
+    }
+  }, [values]);
 
   return (
     <main className={styles.container}>
@@ -82,7 +124,7 @@ const CreateTask = () => {
         </div>
         <div className={styles.col2}>
           {!toggleModal ? <Department /> : null}
-          <Colleague />
+          <Employee />
           <DatePicker />
           <button type="submit" className={styles.submit_btn}>
             დავალების შექმნა

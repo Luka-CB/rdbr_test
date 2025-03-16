@@ -32,10 +32,17 @@ const useDepartmentStore = create<DepartmentStore>((set) => ({
     set({ toggleDepartmentOptions: value }),
   pickedDepartment: null,
   pickedDepartmentModal: null,
-  setPickedDepartment: (department: departmentIFace | null, isModal: boolean) =>
-    isModal
-      ? set({ pickedDepartmentModal: department, departmentError: false })
-      : set({ pickedDepartment: department, departmentError: false }),
+  setPickedDepartment: (
+    department: departmentIFace | null,
+    isModal: boolean
+  ) => {
+    if (isModal) {
+      set({ pickedDepartmentModal: department, departmentError: false });
+    } else {
+      set({ pickedDepartment: department, departmentError: false });
+      localStorage.setItem("department", JSON.stringify(department));
+    }
+  },
   getDepartments: async () => {
     set({ status: "loading" });
     try {
@@ -49,5 +56,10 @@ const useDepartmentStore = create<DepartmentStore>((set) => ({
     }
   },
 }));
+
+const storedDepartment = localStorage.getItem("department") || "";
+useDepartmentStore.setState({
+  pickedDepartment: storedDepartment ? JSON.parse(storedDepartment) : null,
+});
 
 export default useDepartmentStore;

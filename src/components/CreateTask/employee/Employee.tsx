@@ -1,48 +1,56 @@
 import { useEffect, useState } from "react";
-import useColleagueStore, {
-  colleagueIFace,
-} from "../../../store/colleagueStore";
+import useColleagueStore, { employeeIFace } from "../../../store/employeeStore";
 import useDepartmentStore from "../../../store/departmentStore";
 import useModalStore from "../../../store/modalStore";
-import styles from "./Colleague.module.scss";
+import styles from "./Employee.module.scss";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { IoAddCircleOutline } from "react-icons/io5";
 
-const Colleague = () => {
+const Employee = () => {
   const [departmentEmployees, setDepartmentEmployees] = useState<
-    colleagueIFace[]
+    employeeIFace[]
   >([]);
 
   const { setToggleModal } = useModalStore();
   const { pickedDepartment } = useDepartmentStore();
   const {
-    colleagues,
+    employees,
     getEmployees,
-    toggleColleagueOptions,
-    setToggleColleagueOptions,
+    toggleEmployeeOptions,
+    setToggleEmployeeOptions,
+    employeeError,
+    setPickedEmployee,
+    pickedEmployee,
   } = useColleagueStore();
 
   const handleToggleOptions = () => {
-    setToggleColleagueOptions(!toggleColleagueOptions);
-    if (!colleagues?.length) getEmployees();
+    setToggleEmployeeOptions(!toggleEmployeeOptions);
+    if (!employees?.length) getEmployees();
   };
 
   const handleToggleModal = () => {
     setToggleModal(true);
-    setToggleColleagueOptions(false);
+    setToggleEmployeeOptions(false);
   };
 
+  const handlePickEmployee = (employee: employeeIFace) => {
+    setPickedEmployee(employee);
+    setToggleEmployeeOptions(false);
+  };
+
+  console.log(pickedEmployee);
+
   useEffect(() => {
-    if (colleagues?.length && pickedDepartment) {
-      const filteredEmployees = colleagues.filter(
-        (colleague) => colleague.department?.id === pickedDepartment.id
+    if (employees?.length && pickedDepartment) {
+      const filteredEmployees = employees.filter(
+        (employee) => employee.department?.id === pickedDepartment.id
       );
       setDepartmentEmployees(filteredEmployees);
     }
-  }, [colleagues.length, pickedDepartment]);
+  }, [employees.length, pickedDepartment]);
 
   return (
-    <div className={styles.container}>
+    <div className={employeeError ? styles.emp_error : styles.employee}>
       <label className={!pickedDepartment ? styles.disabled_label : undefined}>
         პასუხისმგებელი თანამშრომელი*
       </label>
@@ -50,20 +58,31 @@ const Colleague = () => {
         className={
           !pickedDepartment
             ? styles.select_input_disabled
-            : toggleColleagueOptions
+            : toggleEmployeeOptions
             ? styles.select_input_active
             : styles.select_input
         }
         onClick={handleToggleOptions}
       >
-        <span>{pickedDepartment ? "აირჩიე თანამშრომელი" : ""}</span>
-        {toggleColleagueOptions ? (
+        {pickedEmployee ? (
+          <div className={styles.picked_employee}>
+            <img src={pickedEmployee?.avatar as string} alt="avatar" />
+            <span className={styles.name}>
+              {pickedEmployee?.name} {pickedEmployee?.surname}
+            </span>
+          </div>
+        ) : (
+          <span className={styles.placeholder}>
+            {pickedDepartment ? "აირჩიე თანამშრომელი" : ""}
+          </span>
+        )}
+        {toggleEmployeeOptions ? (
           <FaChevronUp className={styles.icon} />
         ) : (
           <FaChevronDown className={styles.icon} />
         )}
       </div>
-      {toggleColleagueOptions ? (
+      {toggleEmployeeOptions ? (
         <div className={styles.options} onClick={(e) => e.stopPropagation()}>
           <div className={styles.add_colleague} onClick={handleToggleModal}>
             <IoAddCircleOutline className={styles.icon} />
@@ -71,7 +90,11 @@ const Colleague = () => {
           </div>
           <div className={styles.options_wrapper}>
             {departmentEmployees?.map((depEmp) => (
-              <div className={styles.option} key={depEmp.id}>
+              <div
+                className={styles.option}
+                key={depEmp.id}
+                onClick={() => handlePickEmployee(depEmp)}
+              >
                 <div className={styles.avatar}>
                   <img src={depEmp.avatar as string} alt="avatar" />
                 </div>
@@ -87,4 +110,4 @@ const Colleague = () => {
   );
 };
 
-export default Colleague;
+export default Employee;
