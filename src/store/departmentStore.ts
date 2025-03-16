@@ -19,6 +19,7 @@ interface DepartmentStore {
     department: departmentIFace | null,
     isModal: boolean
   ) => void;
+  removePickedDepartment: () => void;
   getDepartments: () => Promise<void>;
 }
 
@@ -40,8 +41,13 @@ const useDepartmentStore = create<DepartmentStore>((set) => ({
       set({ pickedDepartmentModal: department, departmentError: false });
     } else {
       set({ pickedDepartment: department, departmentError: false });
-      localStorage.setItem("department", JSON.stringify(department));
+      if (department)
+        localStorage.setItem("department", JSON.stringify(department));
     }
+  },
+  removePickedDepartment: () => {
+    set({ pickedDepartment: null });
+    localStorage.removeItem("department");
   },
   getDepartments: async () => {
     set({ status: "loading" });

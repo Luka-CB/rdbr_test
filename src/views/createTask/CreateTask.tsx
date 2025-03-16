@@ -13,19 +13,39 @@ import useDeadlineStore from "../../store/deadlineStore";
 import { useEffect } from "react";
 import usePriorityStore from "../../store/priorityStore";
 import useStatusStore from "../../store/statusStore";
+import useAddTaskStore from "../../store/task/addTaskStore";
+import { useNavigate } from "react-router-dom";
 
 const CreateTask = () => {
   const { toggleModal } = useModalStore();
-  const { pickedPriority } = usePriorityStore();
-  const { pickedStatus } = useStatusStore();
-  const { pickedDepartment, setDepartmentError } = useDepartmentStore();
-  const { setEmployeeError, pickedEmployee } = useEmployeeStore();
-  const { date, setDateError } = useDeadlineStore();
+  const { pickedPriority, removePickedPriority } = usePriorityStore();
+  const { pickedStatus, removePickedStatus } = useStatusStore();
+  const { pickedDepartment, setDepartmentError, removePickedDepartment } =
+    useDepartmentStore();
+  const { setEmployeeError, pickedEmployee, removePickedEmployee } =
+    useEmployeeStore();
+  const { date, setDateError, removeDate } = useDeadlineStore();
+  const { status, addTask, reset } = useAddTaskStore();
+
+  const navigate = useNavigate();
 
   const validationSchema = yup.object().shape({
     title: yup.string().required().min(2).max(255),
     description: yup.string().required().min(2).max(255),
   });
+
+  useEffect(() => {
+    if (status === "success") {
+      localStorage.removeItem("inputData");
+      removePickedPriority();
+      removePickedStatus();
+      removeDate();
+      removePickedDepartment();
+      removePickedEmployee();
+      navigate("/");
+      reset();
+    }
+  }, [status]);
 
   const onSubmit = () => {
     if (!pickedDepartment) {
@@ -40,7 +60,7 @@ const CreateTask = () => {
       return setDateError(true);
     }
 
-    console.log({
+    addTask({
       name: values.title,
       description: values.description,
       due_date: date,

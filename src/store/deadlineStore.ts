@@ -3,6 +3,7 @@ import { create } from "zustand";
 interface DeadlineStore {
   date: Date | null;
   setDate: (date: Date | null) => void;
+  removeDate: () => void;
   dateError: boolean;
   setDateError: (value: boolean) => void;
 }
@@ -12,7 +13,11 @@ const useDeadlineStore = create<DeadlineStore>((set) => ({
   dateError: false,
   setDate: (date: Date | null) => {
     set({ date, dateError: false });
-    localStorage.setItem("deadline", JSON.stringify(date));
+    if (date) localStorage.setItem("deadline", JSON.stringify(date));
+  },
+  removeDate: () => {
+    set({ date: null });
+    localStorage.removeItem("deadline");
   },
   setDateError: (value: boolean) => set({ dateError: value }),
 }));

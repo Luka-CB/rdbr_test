@@ -13,6 +13,7 @@ interface StatusStore {
   setToggleStatusOptions: (value: boolean) => void;
   pickedStatus: statusIFace | null;
   setPickedStatus: (status: statusIFace) => void;
+  removePickedStatus: () => void;
   getStatuses: () => Promise<void>;
 }
 
@@ -26,6 +27,10 @@ const useStatusStore = create<StatusStore>((set, get) => ({
   setPickedStatus: (status: statusIFace) => {
     set({ pickedStatus: status });
     localStorage.setItem("status", JSON.stringify(status));
+  },
+  removePickedStatus: () => {
+    set({ pickedStatus: null, statuses: [] });
+    localStorage.removeItem("status");
   },
   getStatuses: async () => {
     set({ status: "loading" });

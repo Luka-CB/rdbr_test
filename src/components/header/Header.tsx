@@ -1,13 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 import useModalStore from "../../store/modalStore";
 
 const Header = () => {
   const { setToggleModal } = useModalStore();
 
+  const navigate = useNavigate();
+
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>
+      <div className={styles.logo} onClick={() => navigate("/")}>
         <img src="/logo.svg" alt="logo" />
       </div>
       <div className={styles.btns}>

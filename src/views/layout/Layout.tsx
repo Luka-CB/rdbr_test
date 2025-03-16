@@ -17,14 +17,14 @@ const Layout = () => {
   const { toggleStatusOptions, setToggleStatusOptions } = useStatusStore();
   const { toggleDepartmentOptions, setToggleDepartmentOptions } =
     useDepartmentStore();
-  const { toggleColleagueOptions, setToggleColleagueOptions } =
+  const { toggleEmployeeOptions, setToggleEmployeeOptions } =
     useColleagueStore();
 
   const handleClosePopups = () => {
     if (togglePriorityOptions) setTogglePriorityOptions(false);
     if (toggleStatusOptions) setToggleStatusOptions(false);
     if (toggleDepartmentOptions) setToggleDepartmentOptions(false);
-    if (toggleColleagueOptions) setToggleColleagueOptions(false);
+    if (toggleEmployeeOptions) setToggleEmployeeOptions(false);
   };
 
   useEffect(() => {

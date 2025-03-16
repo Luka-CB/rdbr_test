@@ -14,6 +14,7 @@ interface PriorityStore {
   setTogglePriorityOptions: (value: boolean) => void;
   pickedPriority: priorityIFace | null;
   setPickedPriority: (priority: priorityIFace) => void;
+  removePickedPriority: () => void;
   getPriorities: () => Promise<void>;
 }
 
@@ -27,6 +28,10 @@ const usePriorityStore = create<PriorityStore>((set, get) => ({
   setPickedPriority: (priority: priorityIFace) => {
     set({ pickedPriority: priority });
     localStorage.setItem("priority", JSON.stringify(priority));
+  },
+  removePickedPriority: () => {
+    set({ pickedPriority: null, priorities: [] });
+    localStorage.removeItem("priority");
   },
   getPriorities: async () => {
     set({ status: "loading" });

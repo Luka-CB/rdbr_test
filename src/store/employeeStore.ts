@@ -19,6 +19,7 @@ interface EmployeeStore {
   setToggleEmployeeOptions: (value: boolean) => void;
   pickedEmployee: employeeIFace | null;
   setPickedEmployee: (employee: employeeIFace | null) => void;
+  removePickedEmployee: () => void;
   addEmployee: (employee: employeeIFace) => Promise<void>;
   getEmployees: () => Promise<void>;
   reset: () => void;
@@ -35,7 +36,11 @@ const useEmployeeStore = create<EmployeeStore>((set) => ({
   pickedEmployee: null,
   setPickedEmployee: (employee: employeeIFace | null) => {
     set({ pickedEmployee: employee, employeeError: false });
-    localStorage.setItem("employee", JSON.stringify(employee));
+    if (employee) localStorage.setItem("employee", JSON.stringify(employee));
+  },
+  removePickedEmployee: () => {
+    set({ pickedEmployee: null });
+    localStorage.removeItem("employee");
   },
   addEmployee: async (employee: employeeIFace) => {
     set({ status: "loading" });
