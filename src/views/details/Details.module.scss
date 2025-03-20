@@ -1,0 +1,157 @@
+.container {
+  display: flex;
+  width: 100%;
+  padding: 0 120px 376px 120px;
+
+  .task {
+    width: 715px;
+    margin-top: 40px;
+
+    .pills {
+      display: flex;
+      align-items: center;
+
+      .priority {
+        padding: 4px 5px;
+        border: 0.5px solid #e0e0e0;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+          margin-left: 4px;
+          font-size: 16px;
+        }
+      }
+
+      .department {
+        padding: 5px 10px;
+        background-color: #ff66a8;
+        border-radius: 15px;
+        margin-left: 18px;
+
+        span {
+          font-size: 16px;
+          color: var(--light);
+        }
+      }
+    }
+
+    h1 {
+      margin-top: 12px;
+      font-size: 34px;
+      color: #212529;
+    }
+
+    p {
+      margin-top: 26px;
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 150%;
+    }
+
+    .task_details {
+      margin-top: 63px;
+
+      h3 {
+        font-size: 24px;
+        color: #212529;
+      }
+
+      .status {
+        margin-top: 28px;
+        display: flex;
+        align-items: center;
+        padding: 23px 0;
+
+        .title {
+          display: flex;
+          align-items: center;
+          width: 164px;
+
+          span {
+            margin-left: 6px;
+            font-size: 16px;
+            color: #474747;
+          }
+        }
+
+        .status_dropdown {
+          margin-left: 64px;
+        }
+      }
+
+      .employee {
+        display: flex;
+        align-items: center;
+        padding: 23px 0;
+
+        .title {
+          display: flex;
+          align-items: center;
+          width: 164px;
+
+          span {
+            margin-left: 6px;
+            font-size: 16px;
+            color: #474747;
+          }
+        }
+
+        .employee_info {
+          display: flex;
+          align-items: flex-end;
+          margin-left: 64px;
+
+          img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          .employee_name {
+            margin-left: 12px;
+
+            span {
+              color: #474747;
+              font-size: 11px;
+            }
+
+            h4 {
+              font-size: 14px;
+              color: #0d0f10;
+              font-weight: 500;
+              padding: 5.5px 0;
+            }
+          }
+        }
+      }
+
+      .date {
+        display: flex;
+        align-items: center;
+        padding: 23px 0;
+
+        .title {
+          display: flex;
+          align-items: center;
+          width: 164px;
+
+          span {
+            margin-left: 6px;
+            font-size: 16px;
+            color: #474747;
+          }
+        }
+
+        span {
+          margin-left: 64px;
+          font-size: 14px;
+          color: #0d0f10;
+        }
+      }
+    }
+  }
+}

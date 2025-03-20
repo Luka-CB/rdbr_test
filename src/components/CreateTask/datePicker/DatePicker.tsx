@@ -12,8 +12,6 @@ const CustomDatePicker = () => {
   tomorrow.setDate(tomorrow.getDate() + 1);
   const { date, setDate, dateError } = useDeadlineStore();
 
-  console.log(date);
-
   return (
     <div className={dateError ? styles.deadline_error : styles.deadline}>
       <label>დედლაინი*</label>

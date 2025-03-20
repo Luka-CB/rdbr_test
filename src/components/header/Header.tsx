@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 import useModalStore from "../../store/modalStore";
 
@@ -6,10 +6,14 @@ const Header = () => {
   const { setToggleModal } = useModalStore();
 
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   return (
     <header className={styles.header}>
-      <div className={styles.logo} onClick={() => navigate("/")}>
+      <div
+        className={styles.logo}
+        onClick={() => pathname !== "/" && navigate("/")}
+      >
         <img src="/logo.svg" alt="logo" />
       </div>
       <div className={styles.btns}>

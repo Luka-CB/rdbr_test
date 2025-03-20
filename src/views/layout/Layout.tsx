@@ -8,6 +8,7 @@ import useColleagueStore from "../../store/employeeStore";
 import Modal from "../../components/modal/Modal";
 import useModalStore from "../../store/modalStore";
 import { useEffect } from "react";
+import useFilterDropdownStore from "../../store/filter/filterDropdownStore";
 
 const Layout = () => {
   const { toggleModal } = useModalStore();
@@ -19,12 +20,23 @@ const Layout = () => {
     useDepartmentStore();
   const { toggleEmployeeOptions, setToggleEmployeeOptions } =
     useColleagueStore();
+  const {
+    toggleDepartmentFilterOptions,
+    toggleEmployeeFilterOptions,
+    togglePriorityFilterOptions,
+    setToggleDepartmentFilterOptions,
+    setToggleEmployeeFilterOptions,
+    setTogglePriorityFilterOptions,
+  } = useFilterDropdownStore();
 
   const handleClosePopups = () => {
     if (togglePriorityOptions) setTogglePriorityOptions(false);
     if (toggleStatusOptions) setToggleStatusOptions(false);
     if (toggleDepartmentOptions) setToggleDepartmentOptions(false);
     if (toggleEmployeeOptions) setToggleEmployeeOptions(false);
+    if (toggleDepartmentFilterOptions) setToggleDepartmentFilterOptions(false);
+    if (togglePriorityFilterOptions) setTogglePriorityFilterOptions(false);
+    if (toggleEmployeeFilterOptions) setToggleEmployeeFilterOptions(false);
   };
 
   useEffect(() => {

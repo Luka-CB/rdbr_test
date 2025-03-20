@@ -12,7 +12,8 @@ interface StatusStore {
   toggleStatusOptions: boolean;
   setToggleStatusOptions: (value: boolean) => void;
   pickedStatus: statusIFace | null;
-  setPickedStatus: (status: statusIFace) => void;
+  pickedStatusDetails: statusIFace | null;
+  setPickedStatus: (status: statusIFace, isFromDetails?: boolean) => void;
   removePickedStatus: () => void;
   getStatuses: () => Promise<void>;
 }
@@ -24,9 +25,14 @@ const useStatusStore = create<StatusStore>((set, get) => ({
   setToggleStatusOptions: (value: boolean) =>
     set({ toggleStatusOptions: value }),
   pickedStatus: null,
-  setPickedStatus: (status: statusIFace) => {
-    set({ pickedStatus: status });
-    localStorage.setItem("status", JSON.stringify(status));
+  pickedStatusDetails: null,
+  setPickedStatus: (status: statusIFace, isFromDetails: boolean = false) => {
+    if (isFromDetails) {
+      set({ pickedStatusDetails: status });
+    } else {
+      set({ pickedStatus: status });
+      localStorage.setItem("status", JSON.stringify(status));
+    }
   },
   removePickedStatus: () => {
     set({ pickedStatus: null, statuses: [] });

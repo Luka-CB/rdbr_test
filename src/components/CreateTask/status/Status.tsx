@@ -1,13 +1,19 @@
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import useStatusStore, { statusIFace } from "../../../store/statusStore";
 import styles from "./Status.module.scss";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
+import { useLocation } from "react-router-dom";
 
-const Status = () => {
+interface propsIFace {
+  hasLabel?: boolean;
+}
+
+const Status: React.FC<propsIFace> = ({ hasLabel = true }) => {
   const {
     statuses,
     getStatuses,
     pickedStatus,
+    pickedStatusDetails,
     setPickedStatus,
     toggleStatusOptions,
     setToggleStatusOptions,
@@ -19,21 +25,29 @@ const Status = () => {
     }
   }, [statuses?.length]);
 
+  const { pathname } = useLocation();
+
   const handlePickStatus = (value: statusIFace) => {
-    setPickedStatus(value);
+    if (pathname.split("/")[1] === "details") {
+      setPickedStatus(value, true);
+    } else {
+      setPickedStatus(value);
+    }
     setToggleStatusOptions(false);
   };
 
   return (
     <div className={styles.container}>
-      <label>სტატუსი*</label>
+      {hasLabel ? <label>სტატუსი*</label> : null}
       <div
         className={
           toggleStatusOptions ? styles.select_input_active : styles.select_input
         }
         onClick={() => setToggleStatusOptions(!toggleStatusOptions)}
       >
-        <span>{pickedStatus?.name}</span>
+        <span>
+          {pickedStatusDetails ? pickedStatusDetails?.name : pickedStatus?.name}
+        </span>
         {toggleStatusOptions ? (
           <FaChevronUp className={styles.icon} />
         ) : (

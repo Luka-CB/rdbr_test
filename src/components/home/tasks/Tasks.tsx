@@ -1,26 +1,15 @@
+import { useEffect } from "react";
+import useStatusStore from "../../../store/statusStore";
 import Task from "./task/Task";
 import styles from "./Tasks.module.scss";
-
-const statuses = [
-  {
-    id: 1,
-    name: "დასაწყები",
-  },
-  {
-    id: 2,
-    name: "პროგრესში",
-  },
-  {
-    id: 3,
-    name: "მზად ტესტირებისთვის",
-  },
-  {
-    id: 4,
-    name: "დასრულებული",
-  },
-];
+import useTaskStore from "../../../store/task/taskStore";
+import useFilterStore from "../../../store/filter/filterStore";
 
 const Tasks = () => {
+  const { statuses, getStatuses } = useStatusStore();
+  const { tasks, getTasks } = useTaskStore();
+  const { filters } = useFilterStore();
+
   const statusColor = (id: number) => {
     return id === 1
       ? "#f7bc30"
@@ -33,8 +22,46 @@ const Tasks = () => {
       : "";
   };
 
+  useEffect(() => {
+    if (!statuses?.length) {
+      getStatuses();
+    }
+
+    if (statuses?.length) {
+      getTasks();
+    }
+  }, [statuses?.length]);
+
+  const filteredTasks = tasks?.filter((task) => {
+    const departmentMatch =
+      filters.departmentIds.length === 0 ||
+      filters.departmentIds.includes(task.department.id);
+    const priorityMatch =
+      filters.priorityIds.length === 0 ||
+      filters.priorityIds.includes(task.priority.id);
+    const employeeMatch =
+      !filters.employeeId || filters.employeeId === task.employee.id;
+
+    return departmentMatch && priorityMatch && employeeMatch;
+  });
+
+  const tasksToDisplay =
+    !filters.departmentIds.length &&
+    !filters.priorityIds.length &&
+    !filters.employeeId
+      ? tasks
+      : filteredTasks;
+
   return (
     <div className={styles.container}>
+      {!tasksToDisplay?.length &&
+      (filters.departmentIds.length ||
+        filters.priorityIds.length ||
+        filters.employeeId) ? (
+        <div className={styles.no_tasks}>
+          <span>დავალებები არ მოიძებნა!</span>
+        </div>
+      ) : null}
       {statuses.map((status) => (
         <div className={styles.tasks_wrapper} key={status.id}>
           <div
@@ -44,25 +71,13 @@ const Tasks = () => {
             <span>{status.name}</span>
           </div>
           <div className={styles.tasks}>
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
-            <Task borderColor={statusColor(status.id)} />
+            {tasksToDisplay?.map((task) => (
+              <div className={styles.task_wrapper} key={task.id}>
+                {status.id === task.status?.id && (
+                  <Task borderColor={statusColor(status.id)} task={task} />
+                )}
+              </div>
+            ))}
           </div>
         </div>
       ))}

@@ -1,8 +1,19 @@
 .container {
   width: 100%;
   margin-top: 79px;
+  min-height: 60vh;
   display: flex;
   justify-content: space-between;
+  position: relative;
+
+  .no_tasks {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: var(--danger);
+  }
 
   .tasks_wrapper {
     width: 381px;
@@ -20,6 +31,12 @@
     .tasks {
       margin-top: 30px;
       width: 100%;
+
+      .task_wrapper {
+        &:not(:first-child) {
+          margin-top: 30px;
+        }
+      }
     }
   }
 }

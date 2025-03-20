@@ -1,0 +1,50 @@
+.container {
+  position: absolute;
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+
+  .picked_filters {
+    display: flex;
+    max-width: 650px;
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .picked_filter {
+      padding: 6px 10px;
+      border: 1px solid #ced4da;
+      border-radius: 43px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+
+      &:not(:first-child) {
+        margin-left: 8px;
+      }
+
+      span {
+        font-size: 14px;
+        color: #343a40;
+        font-weight: 200;
+      }
+
+      .icon {
+        font-size: 14px;
+        color: #343a40;
+        margin-left: 4px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .clear_btn {
+    margin-left: 18px;
+    font-size: 14px;
+    color: #343a40;
+    font-weight: 200;
+    cursor: pointer;
+  }
+}

@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import useDepartmentStore from "../../store/departmentStore";
 import { useFormik } from "formik";
 import useAvatarStore from "../../store/avatarStore";
-import { getAvatarArrayBuffer } from "../../utils/buffer";
+import { getAvatarArrayBuffer } from "../../utils/misc";
 import useColleagueStore from "../../store/employeeStore";
 
 const Modal = () => {
