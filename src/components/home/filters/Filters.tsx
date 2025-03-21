@@ -6,12 +6,14 @@ import EmployeeFilter from "./employee/EmployeeFilter";
 import useFilterDropdownStore from "../../../store/filter/filterDropdownStore";
 import useQueryParams from "../../../hooks/queryParams";
 import useFilterStore from "../../../store/filter/filterStore";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import PickedFilters from "./pickedFilters/PickedFilters";
 
 const Filters = () => {
+  const hasSetFilters = useRef(false);
+
   const { getQueryParams } = useQueryParams();
-  const { setFilters, filters } = useFilterStore();
+  const { setFilters } = useFilterStore();
   const {
     toggleDepartmentFilterOptions,
     togglePriorityFilterOptions,
@@ -25,19 +27,16 @@ const Filters = () => {
   const emp = getQueryParams("emp");
   const prtys = getQueryParams("prty");
 
-  const handleSetFilters = () => {
-    if (deps?.length || prtys?.length || emp) {
+  useEffect(() => {
+    if (!hasSetFilters.current && (deps?.length || prtys?.length || emp)) {
       const modifiedDeps = deps.map((dep) => +dep);
       const modifiedPrtys = prtys.map((prty) => +prty);
+
       setFilters(modifiedDeps, "department");
       setFilters(modifiedPrtys, "priority");
       setFilters(+emp, "employee");
     }
-  };
-
-  useEffect(() => {
-    handleSetFilters();
-  }, []);
+  }, [deps, emp, prtys, setFilters]);
 
   return (
     <div className={styles.filters}>

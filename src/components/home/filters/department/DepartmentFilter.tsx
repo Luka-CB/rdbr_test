@@ -31,7 +31,7 @@ const DepartmentFilter = () => {
     if (!departments?.length) {
       getDepartments();
     }
-  }, [departments?.length]);
+  }, [departments?.length, getDepartments]);
 
   const queryParams: string[] = getQueryParams("dep");
 
@@ -39,7 +39,7 @@ const DepartmentFilter = () => {
     if (queryParams.length) {
       setPickedFilterIds(queryParams.map(Number));
     }
-  }, []);
+  }, [queryParams]);
 
   const handleChooseBtn = () => {
     updateQueryParams("dep", pickedFilterIds);

@@ -1,4 +1,4 @@
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 import useStatusStore, { statusIFace } from "../../../store/statusStore";
 import styles from "./Status.module.scss";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
@@ -23,7 +23,7 @@ const Status: React.FC<propsIFace> = ({ hasLabel = true }) => {
     if (!statuses?.length) {
       getStatuses();
     }
-  }, [statuses?.length]);
+  }, [statuses?.length, getStatuses]);
 
   const { pathname } = useLocation();
 

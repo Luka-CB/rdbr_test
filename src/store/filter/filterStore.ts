@@ -24,16 +24,21 @@ const useFilterStore = create<FilterStore>((set) => ({
     data: number[] | number[] | (number | null),
     type: "department" | "priority" | "employee"
   ) => {
-    set((state) => ({
-      filters: {
+    set((state) => {
+      const newFilters = {
         ...state.filters,
         [type === "department"
           ? "departmentIds"
           : type === "priority"
           ? "priorityIds"
           : "employeeId"]: data,
-      },
-    }));
+      };
+
+      if (JSON.stringify(newFilters) !== JSON.stringify(state.filters)) {
+        return { filters: newFilters };
+      }
+      return state;
+    });
   },
   removeFilter: (id: number | null, type: "dep" | "prty" | "emp") => {
     set((state) => {

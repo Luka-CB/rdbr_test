@@ -22,7 +22,7 @@ const AddReply: React.FC<propsIFace> = ({ task_id, commentId }) => {
       setHasCommentAdded(true);
       reset();
     }
-  }, [status, reply]);
+  }, [status, reply, reset, setHasCommentAdded]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

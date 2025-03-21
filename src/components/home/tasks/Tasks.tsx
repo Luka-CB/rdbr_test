@@ -32,7 +32,7 @@ const Tasks = () => {
     if (statuses?.length) {
       getTasks();
     }
-  }, [statuses?.length]);
+  }, [statuses?.length, getStatuses, getTasks]);
 
   useEffect(() => {
     if (tasks?.length) {
@@ -40,7 +40,7 @@ const Tasks = () => {
         getComments(task.id);
       });
     }
-  }, [tasks]);
+  }, [tasks, getComments]);
 
   const filteredTasks = tasks?.filter((task) => {
     const departmentMatch =

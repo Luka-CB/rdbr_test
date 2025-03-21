@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styles from "./PickedFilters.module.scss";
 import { IoCloseOutline } from "react-icons/io5";
 import useDepartmentStore, {
@@ -19,8 +19,6 @@ export interface PickedFilters {
 }
 
 const PickedFilters = () => {
-  const [pickedFilters, setPickedFilters] = useState<PickedFilters[]>([]);
-
   const { filters, removeFilter, clearFilters } = useFilterStore();
   const { departments, getDepartments } = useDepartmentStore();
   const { priorities, getPriorities } = usePriorityStore();
@@ -46,41 +44,48 @@ const PickedFilters = () => {
     if (filters.departmentIds?.length && !departments.length) getDepartments();
     if (filters.priorityIds?.length && !priorities.length) getPriorities();
     if (filters.employeeId && !employees.length) getEmployees();
-  }, [filters, departments, priorities, employees]);
+  }, [
+    filters,
+    departments,
+    priorities,
+    employees,
+    getDepartments,
+    getPriorities,
+    getEmployees,
+  ]);
 
-  useEffect(() => {
-    const departmentFilters = getFilteredData(
-      departments,
-      filters.departmentIds,
-      "dep"
-    );
-    const priorityFilters = getFilteredData(
-      priorities,
-      filters.priorityIds,
-      "prty"
-    );
+  const departmentFilters = getFilteredData(
+    departments,
+    filters.departmentIds,
+    "dep"
+  );
 
-    let employeeFilter: PickedFilters[] = [];
-    if (filters.employeeId && employees.length) {
-      const employee = employees.find((emp) => emp.id === filters.employeeId);
-      if (employee) {
-        employeeFilter = [
-          {
-            id: `${employee.id}${employee.name}`,
-            originalId: employee.id as number,
-            name: `${employee.name} ${employee.surname}`,
-            type: "emp",
-          },
-        ];
-      }
+  const priorityFilters = getFilteredData(
+    priorities,
+    filters.priorityIds,
+    "prty"
+  );
+
+  let employeeFilter: PickedFilters[] = [];
+  if (filters.employeeId && employees.length) {
+    const employee = employees.find((emp) => emp.id === filters.employeeId);
+    if (employee) {
+      employeeFilter = [
+        {
+          id: `${employee.id}${employee.name}`,
+          originalId: employee.id as number,
+          name: `${employee.name} ${employee.surname}`,
+          type: "emp",
+        },
+      ];
     }
+  }
 
-    setPickedFilters([
-      ...departmentFilters,
-      ...priorityFilters,
-      ...employeeFilter,
-    ]);
-  }, [filters, departments, priorities, employees]);
+  let pickedFilters = [
+    ...departmentFilters,
+    ...priorityFilters,
+    ...employeeFilter,
+  ];
 
   const { removeQueryParam, clearQueryParams } = useQueryParams();
 
@@ -91,7 +96,7 @@ const PickedFilters = () => {
   ) => {
     const updatedPickedFilters = pickedFilters.filter((item) => item.id !== id);
 
-    setPickedFilters(updatedPickedFilters);
+    pickedFilters = [...updatedPickedFilters];
     removeQueryParam(type, originalId);
     removeFilter(originalId, type as "dep" | "prty" | "emp");
   };
@@ -99,7 +104,6 @@ const PickedFilters = () => {
   const handleClearPickedFilters = () => {
     const types = new Set(pickedFilters.map((pf) => pf.type));
     clearQueryParams(types);
-    setPickedFilters([]);
     clearFilters();
   };
 

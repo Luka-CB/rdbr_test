@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import useAddCommentStore from "../../store/comment/addCommentStore";
 import styles from "./Comments.module.scss";
-import { is } from "date-fns/locale";
 
 interface propsIFace {
   task_id: number;
@@ -21,7 +20,7 @@ const AddComment: React.FC<propsIFace> = ({ task_id }) => {
       setHasCommentAdded(true);
       reset();
     }
-  }, [status, comment]);
+  }, [status, comment, reset, setHasCommentAdded]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -22,7 +22,7 @@ const Priority = () => {
     if (!priorities.length) {
       getPriorities();
     }
-  }, [priorities.length]);
+  }, [priorities.length, getPriorities]);
 
   return (
     <div className={styles.container}>

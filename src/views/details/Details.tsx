@@ -22,17 +22,17 @@ const Details = () => {
 
   useEffect(() => {
     if (id) getTask(+id);
-  }, [id]);
+  }, [id, getTask]);
 
   useEffect(() => {
     if (task?.status) setPickedStatus(task.status, true);
-  }, [task?.status]);
+  }, [task?.status, setPickedStatus]);
 
   useEffect(() => {
     if (pickedStatusDetails?.id !== task?.status.id && id) {
       if (pickedStatusDetails) updateTask(pickedStatusDetails.id, +id!);
     }
-  }, [pickedStatusDetails, id]);
+  }, [pickedStatusDetails, id, task?.status.id, updateTask]);
 
   const formattedDate = task?.due_date
     ? format(new Date(task.due_date), "EEE - MM/d/yyyy", { locale: ka })

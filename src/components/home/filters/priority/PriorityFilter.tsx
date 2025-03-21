@@ -32,13 +32,13 @@ const PriorityFilter = () => {
     if (!priorities?.length) {
       getPriorities();
     }
-  }, [priorities?.length]);
+  }, [priorities?.length, getPriorities]);
 
   useEffect(() => {
     if (filters.priorityIds?.length) {
       setPickedFilterIds(filters.priorityIds);
     }
-  }, [filters.priorityIds?.length]);
+  }, [filters.priorityIds?.length, filters.priorityIds]);
 
   const handleChooseBtn = () => {
     updateQueryParams("prty", pickedFilterIds);

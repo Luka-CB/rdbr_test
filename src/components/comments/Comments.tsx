@@ -22,12 +22,12 @@ const Comments: React.FC<propsIFace> = ({ task_id }) => {
       setHasCommentAdded(false);
       reset();
     }
-  }, [status]);
+  }, [status, setHasCommentAdded, reset]);
 
   useEffect(() => {
     if (task_id !== 0 || (task_id !== 0 && hasCommentAdded))
       getComments(task_id);
-  }, [task_id, hasCommentAdded]);
+  }, [task_id, hasCommentAdded, getComments]);
 
   const handleToggleReplies = (commentId: number) => {
     if (clickedCommentIds.includes(commentId)) {

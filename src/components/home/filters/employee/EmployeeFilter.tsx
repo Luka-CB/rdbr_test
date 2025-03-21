@@ -18,7 +18,7 @@ const EmployeeFilter = () => {
     if (!employees?.length) {
       getEmployees();
     }
-  }, [employees?.length]);
+  }, [employees?.length, getEmployees]);
 
   useEffect(() => {
     if (filters.employeeId) {

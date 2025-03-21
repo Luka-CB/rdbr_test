@@ -45,7 +45,16 @@ const CreateTask = () => {
       navigate("/");
       reset();
     }
-  }, [status]);
+  }, [
+    status,
+    removePickedPriority,
+    removePickedStatus,
+    removeDate,
+    removePickedDepartment,
+    removePickedEmployee,
+    navigate,
+    reset,
+  ]);
 
   const onSubmit = () => {
     if (!pickedDepartment) {

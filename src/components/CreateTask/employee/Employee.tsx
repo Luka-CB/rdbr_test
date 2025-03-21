@@ -38,8 +38,6 @@ const Employee = () => {
     setToggleEmployeeOptions(false);
   };
 
-  console.log(pickedEmployee);
-
   useEffect(() => {
     if (employees?.length && pickedDepartment) {
       const filteredEmployees = employees.filter(
@@ -47,7 +45,7 @@ const Employee = () => {
       );
       setDepartmentEmployees(filteredEmployees);
     }
-  }, [employees.length, pickedDepartment]);
+  }, [employees, pickedDepartment]);
 
   return (
     <div className={employeeError ? styles.emp_error : styles.employee}>

@@ -37,7 +37,7 @@ const Modal = () => {
       setPickedDepartment(null, true);
       reset();
     }
-  }, [status]);
+  }, [status, setToggleModal, setAvatar, setPickedDepartment, reset]);
 
   const onSubmit = () => {
     if (!avatar) {
