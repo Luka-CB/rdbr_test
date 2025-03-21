@@ -3,7 +3,7 @@ import useCommentStore from "../../store/comment/commentStore";
 import styles from "./Comments.module.scss";
 import AddComment from "./AddComment";
 import useAddCommentStore from "../../store/comment/addCommentStore";
-import Comment from "./comment";
+import Comment from "./Comment";
 import ReplyIcon from "../../svgs/ReplyIcon";
 import AddReply from "./AddReply";
 
