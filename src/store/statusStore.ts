@@ -13,7 +13,10 @@ interface StatusStore {
   setToggleStatusOptions: (value: boolean) => void;
   pickedStatus: statusIFace | null;
   pickedStatusDetails: statusIFace | null;
-  setPickedStatus: (status: statusIFace, isFromDetails?: boolean) => void;
+  setPickedStatus: (
+    status: statusIFace | null,
+    isFromDetails?: boolean
+  ) => void;
   removePickedStatus: () => void;
   getStatuses: () => Promise<void>;
 }
@@ -26,7 +29,10 @@ const useStatusStore = create<StatusStore>((set, get) => ({
     set({ toggleStatusOptions: value }),
   pickedStatus: null,
   pickedStatusDetails: null,
-  setPickedStatus: (status: statusIFace, isFromDetails: boolean = false) => {
+  setPickedStatus: (
+    status: statusIFace | null,
+    isFromDetails: boolean = false
+  ) => {
     if (isFromDetails) {
       set({ pickedStatusDetails: status });
     } else {

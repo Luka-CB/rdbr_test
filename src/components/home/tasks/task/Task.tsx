@@ -9,9 +9,10 @@ import { useNavigate } from "react-router-dom";
 interface propsIFace {
   borderColor: string;
   task: taskIFace;
+  commentCount: number;
 }
 
-const Task: React.FC<propsIFace> = ({ borderColor, task }) => {
+const Task: React.FC<propsIFace> = ({ borderColor, task, commentCount }) => {
   const navigate = useNavigate();
 
   const formattedDate = format(task?.due_date, "dd MMM, yyyy", { locale: ka });
@@ -56,7 +57,7 @@ const Task: React.FC<propsIFace> = ({ borderColor, task }) => {
         </div>
         <div className={styles.comments}>
           <TfiComment className={styles.icon} />
-          <span>8</span>
+          <span>{commentCount}</span>
         </div>
       </footer>
     </div>

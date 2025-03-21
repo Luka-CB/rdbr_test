@@ -4,11 +4,13 @@ import Task from "./task/Task";
 import styles from "./Tasks.module.scss";
 import useTaskStore from "../../../store/task/taskStore";
 import useFilterStore from "../../../store/filter/filterStore";
+import useCommentStore from "../../../store/comment/commentStore";
 
 const Tasks = () => {
   const { statuses, getStatuses } = useStatusStore();
   const { tasks, getTasks } = useTaskStore();
   const { filters } = useFilterStore();
+  const { getComments, commentsByTaskId } = useCommentStore();
 
   const statusColor = (id: number) => {
     return id === 1
@@ -31,6 +33,14 @@ const Tasks = () => {
       getTasks();
     }
   }, [statuses?.length]);
+
+  useEffect(() => {
+    if (tasks?.length) {
+      tasks.forEach((task) => {
+        getComments(task.id);
+      });
+    }
+  }, [tasks]);
 
   const filteredTasks = tasks?.filter((task) => {
     const departmentMatch =
@@ -74,7 +84,11 @@ const Tasks = () => {
             {tasksToDisplay?.map((task) => (
               <div className={styles.task_wrapper} key={task.id}>
                 {status.id === task.status?.id && (
-                  <Task borderColor={statusColor(status.id)} task={task} />
+                  <Task
+                    borderColor={statusColor(status.id)}
+                    task={task}
+                    commentCount={commentsByTaskId[task.id]?.length || 0}
+                  />
                 )}
               </div>
             ))}

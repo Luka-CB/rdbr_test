@@ -11,9 +11,11 @@ import { priorityColor } from "../../utils/misc";
 import useStatusStore from "../../store/statusStore";
 import { format } from "date-fns";
 import { ka } from "date-fns/locale";
+import useUpdateTaskStore from "../../store/task/updateTaskStore";
 
 const Details = () => {
   const { getTask, task } = useTaskStore();
+  const { updateTask } = useUpdateTaskStore();
   const { setPickedStatus, pickedStatusDetails } = useStatusStore();
 
   const { id } = useParams();
@@ -26,7 +28,11 @@ const Details = () => {
     if (task?.status) setPickedStatus(task.status, true);
   }, [task?.status]);
 
-  console.log(pickedStatusDetails);
+  useEffect(() => {
+    if (pickedStatusDetails?.id !== task?.status.id && id) {
+      if (pickedStatusDetails) updateTask(pickedStatusDetails.id, +id!);
+    }
+  }, [pickedStatusDetails, id]);
 
   const formattedDate = task?.due_date
     ? format(new Date(task.due_date), "EEE - MM/d/yyyy", { locale: ka })
@@ -85,7 +91,7 @@ const Details = () => {
           </div>
         </div>
       </div>
-      <Comments />
+      <Comments task_id={+(id ?? 0)} />
     </main>
   );
 };

@@ -30,8 +30,8 @@ const CreateTask = () => {
   const navigate = useNavigate();
 
   const validationSchema = yup.object().shape({
-    title: yup.string().required().min(2).max(255),
-    description: yup.string().required().min(2).max(255),
+    title: yup.string().required().min(2).max(255).trim(),
+    description: yup.string().required().min(2).max(255).trim(),
   });
 
   useEffect(() => {
@@ -61,8 +61,8 @@ const CreateTask = () => {
     }
 
     addTask({
-      name: values.title,
-      description: values.description,
+      name: values.title.trim(),
+      description: values.description.trim(),
       due_date: date,
       status_id: pickedStatus?.id,
       employee_id: pickedEmployee?.id,
